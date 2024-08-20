@@ -1,22 +1,55 @@
+'use client';
+
 import GoogleIcon from '@/assets/icons/GoogleIcon';
 import Link from 'next/link';
+import { useFormState } from 'react-dom';
+import signup from './actions';
 
 export default function CreateAccount() {
+  const [state, dispatch] = useFormState(signup, null);
+
   return (
     <section className='text-center w-full p-7'>
       <div className='mt-14 mb-10 space-y-2'>
         <h1 className='font-bold text-3xl'>Create Your Account</h1>
         <p className='text-gray-500'>Sign up and experience the wide world.</p>
       </div>
-      <form className='flex flex-col items-center space-y-3'>
+      <form
+        action={dispatch}
+        className='flex flex-col justify-center items-start space-y-3'
+      >
         <input
           type='text'
+          name='username'
           className='auth-input'
           placeholder='Username'
           required
         />
-        <input className='auth-input' placeholder='Email' />
-        <input className='auth-input' placeholder='Password' />
+        {state?.fieldErrors.username?.map((error, index) => (
+          <span key={index} className='text-like px-2'>
+            {error}
+          </span>
+        ))}
+        <input
+          type='email'
+          name='email'
+          className='auth-input'
+          placeholder='Email'
+          required
+        />
+        {state?.fieldErrors.email?.map((error, index) => (
+          <span key={index} className='text-like px-2'>
+            {error}
+          </span>
+        ))}
+        <input
+          type='password'
+          name='password'
+          className='auth-input'
+          placeholder='Password'
+          required
+        />
+        <span className='text-like px-2'>{state?.fieldErrors.password}</span>
         <button className='auth-button bg-primary text-white' type='submit'>
           Create Account
         </button>
