@@ -1,5 +1,5 @@
 import prisma from '@/lib/db';
-import { getSession } from '@/lib/session';
+import { sessionLogin } from '@/lib/session';
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 
@@ -37,12 +37,7 @@ const handler = NextAuth({
         }
 
         const sessionData = { id: newUser.id };
-        const session = await getSession();
-
-        if (session) {
-          session.id = sessionData.id;
-          await session.save();
-        }
+        await sessionLogin(sessionData.id);
         return true;
       } catch (error) {
         console.error('Error during sign-in:', error);

@@ -3,7 +3,7 @@
 import prisma from '@/lib/db';
 import { z } from 'zod';
 import bcrypt from 'bcrypt';
-import { getSession } from '@/lib/session';
+import { sessionLogin } from '@/lib/session';
 import { redirect } from 'next/navigation';
 
 const checkExistEmail = async (email: string) => {
@@ -45,9 +45,7 @@ export default async function login(_: unknown, formData: FormData) {
     });
     const ok = await bcrypt.compare(result.data.password, user!.password ?? '');
     if (ok) {
-      const session = await getSession();
-      session.id = user!.id;
-      await session.save();
+      await sessionLogin(user!.id);
       redirect('/');
     } else {
       return {

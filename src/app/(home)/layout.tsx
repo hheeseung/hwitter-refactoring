@@ -10,9 +10,9 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <>
       <Header />
-      <section className='max-w-screen-2xl mx-auto py-5 flex gap-2'>
+      <section className='max-w-screen-2xl mx-auto py-5 flex gap-4'>
         <Sidebar />
-        <main className='w-1/2 bg-white rounded-xl shadow-md p-3'>
+        <main className='w-1/2 bg-white rounded-xl shadow-md p-4'>
           {children}
         </main>
         <Social />

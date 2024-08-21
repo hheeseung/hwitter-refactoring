@@ -17,21 +17,25 @@ export default async function UserInfo() {
     },
   });
 
-  if (!user) return <article>No User</article>;
-
   return (
-    <article className='bg-white flex items-center gap-3 w-full rounded-xl p-3 shadow-md mb-3'>
-      <Image
-        src={user.profileImg ?? ''}
-        alt='profile'
-        width={45}
-        height={45}
-        className='rounded-xl'
-      />
-      <div className='flex flex-col'>
-        <span className='font-semibold'>{user.username}</span>
-        <span className='text-slate-500 text-sm'>{user.email}</span>
-      </div>
+    <article className='bg-white flex items-center gap-3 w-full rounded-xl p-4 shadow-md mb-3'>
+      {user ? (
+        <>
+          <Image
+            src={user.profileImg ?? ''}
+            alt='profile'
+            width={45}
+            height={45}
+            className='rounded-xl'
+          />
+          <div className='flex flex-col'>
+            <span className='font-semibold'>{user.username}</span>
+            <span className='text-slate-500 text-sm'>{user.email}</span>
+          </div>
+        </>
+      ) : (
+        <span>No User</span>
+      )}
     </article>
   );
 }

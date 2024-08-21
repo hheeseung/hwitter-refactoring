@@ -18,6 +18,7 @@
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "react/no-array-index-key": "off",
     "no-else-return": "off",
-    "consistent-return": "off"
+    "consistent-return": "off",
+    "no-alert": "off"
   }
 }
