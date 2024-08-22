@@ -19,6 +19,7 @@
     "react/no-array-index-key": "off",
     "no-else-return": "off",
     "consistent-return": "off",
-    "no-alert": "off"
+    "no-alert": "off",
+    "operator-linebreak": "off"
   }
 }

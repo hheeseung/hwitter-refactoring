@@ -19,14 +19,14 @@ const handler = NextAuth({
       }
 
       try {
-        let newUser = await prisma.user.findUnique({
+        let existUser = await prisma.user.findUnique({
           where: {
             email,
           },
         });
 
-        if (!newUser) {
-          newUser = await prisma.user.create({
+        if (!existUser) {
+          existUser = await prisma.user.create({
             data: {
               email,
               username: name!,
@@ -36,7 +36,7 @@ const handler = NextAuth({
           });
         }
 
-        const sessionData = { id: newUser.id };
+        const sessionData = { id: existUser.id };
         await sessionLogin(sessionData.id);
         return true;
       } catch (error) {

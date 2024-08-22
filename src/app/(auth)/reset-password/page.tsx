@@ -1,28 +1,51 @@
-import Link from 'next/link';
+'use client';
 
-export default function ResetPassword() {
+import { useFormState } from 'react-dom';
+import Link from 'next/link';
+import { reset } from './actions';
+
+export default function CheckEmail() {
+  const [state, dispatch] = useFormState(reset, null);
+
   return (
     <section className='text-center w-full p-7'>
-      <div className='mt-14 mb-10 space-y-2'>
+      <div className='mt-14 mb-8 space-y-2'>
         <h1 className='font-bold text-3xl'>Forgot Password?</h1>
-        <p className='text-gray-500'>Input your email to reset password.</p>
+        <p className='text-gray-500'>Reset your password here.</p>
       </div>
-      <form className='flex flex-col items-center space-y-3'>
-        <input className='auth-input' placeholder='Email' />
-        <button className='auth-button bg-primary text-white' type='submit'>
+      <form
+        action={dispatch}
+        className='flex flex-col items-start justify-center space-y-2'
+      >
+        <input
+          type='email'
+          name='email'
+          className='auth-input'
+          placeholder='Email'
+          required
+        />
+        {state &&
+          state.errors?.fieldErrors.email?.map((error, index) => (
+            <span key={index} className='px-2 py-1 text-like'>
+              {error}
+            </span>
+          ))}
+        <input
+          type='password'
+          name='password'
+          className='auth-input'
+          placeholder='Enter Your New Password'
+          required
+        />
+        <span>{state?.errors?.fieldErrors.password}</span>
+        <button type='submit' className='auth-button bg-primary text-white'>
           Reset
         </button>
       </form>
-      <div className='space-y-4 my-5'>
-        <p className='w-full my-7 text-gray-500 relative flex items-center justify-center'>
-          <span className='flex-grow h-px bg-gray-300 mx-3' />
-          <span>or</span>
-          <span className='flex-grow h-px bg-gray-300 mx-3' />
-        </p>
-      </div>
-      <p>
+      <p className='py-3 text-green-500 font-semibold'>{state?.success}</p>
+      <p className='mt-5'>
         <Link href='/login' className='text-primary font-semibold'>
-          ← Back to Previous Page
+          ← Back to Login Page
         </Link>
       </p>
     </section>
