@@ -12,9 +12,7 @@ export default function Layout({ children }: LayoutProps) {
       <Header />
       <section className='max-w-screen-2xl mx-auto py-5 flex gap-4'>
         <Sidebar />
-        <main className='w-1/2 bg-white rounded-xl shadow-md p-4'>
-          {children}
-        </main>
+        <main className='w-1/2'>{children}</main>
         <Social />
         {/* <BottomNav /> */}
       </section>

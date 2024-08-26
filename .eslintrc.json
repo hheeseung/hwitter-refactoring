@@ -20,6 +20,7 @@
     "no-else-return": "off",
     "consistent-return": "off",
     "no-alert": "off",
-    "operator-linebreak": "off"
+    "operator-linebreak": "off",
+    "jsx-a11y/label-has-associated-control": "off"
   }
 }

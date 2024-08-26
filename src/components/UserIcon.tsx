@@ -1,7 +1,13 @@
 import { FaUser } from 'react-icons/fa';
 
-export default function UserIcon() {
+interface Props {
+  custom: string;
+}
+
+export default function UserIcon({ custom }: Props) {
   return (
-    <FaUser className='size-11 text-primary bg-background p-2 rounded-xl shadow-sm' />
+    <FaUser
+      className={`text-primary bg-background rounded-xl p-2 shadow-sm ${custom}`}
+    />
   );
 }

@@ -31,7 +31,7 @@ export default async function UserInfo() {
               className='rounded-xl'
             />
           ) : (
-            <UserIcon />
+            <UserIcon custom='size-11' />
           )}
           <div className='flex flex-col'>
             <span className='font-semibold'>{user.username}</span>
