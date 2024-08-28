@@ -21,6 +21,7 @@
     "consistent-return": "off",
     "no-alert": "off",
     "operator-linebreak": "off",
-    "jsx-a11y/label-has-associated-control": "off"
+    "jsx-a11y/label-has-associated-control": "off",
+    "@typescript-eslint/comma-dangle": "off"
   }
 }

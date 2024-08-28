@@ -11,7 +11,7 @@ interface Props {
   profileImg: string;
 }
 
-export default function TweetForm({ profileImg }: Props) {
+export default function TweetUploadForm({ profileImg }: Props) {
   const [preview, setPreview] = useState('');
   const [imageId, setImageId] = useState('');
   const [uploadUrl, setUploadUrl] = useState('');
@@ -47,7 +47,7 @@ export default function TweetForm({ profileImg }: Props) {
         alert('업로드에 실패했습니다.');
         return;
       }
-      const photoURL = `https://imagedelivery.net/${process.env.CLOUDFLARE_ACCOUNT_HASH}/${imageId}`;
+      const photoURL = `https://imagedelivery.net/TkBJiZLQuPhAy6jY41Kdvg/${imageId}`;
       formData.set('photo', photoURL);
     }
     return addTweet(_, formData);

@@ -1,4 +1,4 @@
-import TweetForm from '@/components/TweetForm';
+import TweetUploadForm from '@/components/TweetUploadForm';
 import Tweets from '@/components/Tweets';
 import prisma from '@/lib/db';
 import { getSession } from '@/lib/session';
@@ -18,7 +18,7 @@ export default async function Home() {
 
   return (
     <section>
-      <TweetForm profileImg={user?.profileImg || ''} />
+      <TweetUploadForm profileImg={user?.profileImg || ''} />
       <Tweets />
     </section>
   );

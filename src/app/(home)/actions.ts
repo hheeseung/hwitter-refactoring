@@ -39,7 +39,6 @@ export async function addTweet(_: unknown, formData: FormData) {
   }
 }
 
-/* eslint-disable @typescript-eslint/comma-dangle */
 export async function getUploadURL() {
   const res = await fetch(
     `https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ACCOUNT_ID}/images/v2/direct_upload`,
