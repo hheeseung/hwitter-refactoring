@@ -2,9 +2,10 @@
 
 import Image from 'next/image';
 import { HiOutlinePhoto } from 'react-icons/hi2';
-import { useFormState } from 'react-dom';
-import { addTweet, getUploadURL } from '@/app/(home)/actions';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
+import { getImageURL, getUploadURL } from '@/lib/cloudflare';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { createTweet } from '@/services/tweet';
 import UserIcon from './UserIcon';
 
 interface Props {
@@ -12,17 +13,31 @@ interface Props {
 }
 
 export default function TweetUploadForm({ profileImg }: Props) {
+  const queryClient = useQueryClient();
+  const [tweet, setTweet] = useState('');
+  const [imageFile, setImageFile] = useState<File | null>(null);
   const [preview, setPreview] = useState('');
   const [imageId, setImageId] = useState('');
   const [uploadUrl, setUploadUrl] = useState('');
 
+  const mutation = useMutation({
+    mutationFn: createTweet,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['tweets'] });
+    },
+  });
+
   const onImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
+
     if (!files) return;
+
     const previewURL = URL.createObjectURL(files[0]);
     setPreview(previewURL);
+    setImageFile(files[0]);
 
     const { success, result } = await getUploadURL();
+
     if (success) {
       const { id, uploadURL } = result;
       setUploadUrl(uploadURL);
@@ -30,30 +45,23 @@ export default function TweetUploadForm({ profileImg }: Props) {
     }
   };
 
-  const setPhotoAction = async (_: unknown, formData: FormData) => {
-    const photoData = formData.get('photo');
-
-    if (!preview) {
-      const photoURL = '';
-      formData.set('photo', photoURL);
-    } else {
-      const cloudflareForm = new FormData();
-      cloudflareForm.append('file', photoData!);
-      const res = await fetch(uploadUrl, {
-        method: 'POST',
-        body: cloudflareForm,
-      });
-      if (!res.ok) {
-        alert('업로드에 실패했습니다.');
-        return;
-      }
-      const photoURL = `https://imagedelivery.net/TkBJiZLQuPhAy6jY41Kdvg/${imageId}`;
-      formData.set('photo', photoURL);
-    }
-    return addTweet(_, formData);
+  const onChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setTweet(e.target.value);
   };
 
-  const [state, dispatch] = useFormState(setPhotoAction, null);
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const imageURL = await getImageURL({
+      preview,
+      imageFile,
+      uploadUrl,
+      imageId,
+    });
+    mutation.mutate({ tweet, image: imageURL! });
+    setTweet('');
+    setImageFile(null);
+    setPreview('');
+  };
 
   return (
     <section className='bg-white p-4 rounded-xl shadow-md'>
@@ -69,15 +77,16 @@ export default function TweetUploadForm({ profileImg }: Props) {
         ) : (
           <UserIcon custom='w-[45px] h-[45px]' />
         )}
-        <form action={dispatch} className='flex flex-col w-full'>
+        <form onSubmit={handleSubmit} className='flex flex-col w-full'>
           <textarea
             rows={5}
             className='resize-none w-full bg-background outline-none rounded-xl p-4'
             placeholder="What's happening?!"
             name='tweet'
+            onChange={onChange}
+            value={tweet}
             required
           />
-          {state && <span>{state.fieldErrors.tweet}</span>}
           <div className='flex justify-between items-center py-1'>
             {preview ? (
               <Image
@@ -85,18 +94,18 @@ export default function TweetUploadForm({ profileImg }: Props) {
                 alt='preview'
                 width={45}
                 height={45}
-                className='object-cover h-[45px]'
+                className='object-cover h-[45px] rounded-xl'
               />
             ) : (
-              <label htmlFor='photo' className='cursor-pointer'>
+              <label htmlFor='image' className='cursor-pointer'>
                 <HiOutlinePhoto className='size-8 text-primary' />
               </label>
             )}
             <input
               type='file'
               accept='image/*'
-              id='photo'
-              name='photo'
+              id='image'
+              name='image'
               className='hidden'
               onChange={onImageChange}
             />
@@ -107,7 +116,6 @@ export default function TweetUploadForm({ profileImg }: Props) {
               Post
             </button>
           </div>
-          {state && <span>{state.fieldErrors.photo}</span>}
         </form>
       </div>
     </section>

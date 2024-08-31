@@ -2,6 +2,7 @@ import localFont from 'next/font/local';
 import type { Metadata } from 'next';
 import './globals.css';
 import AuthContext from '@/context/AuthContext';
+import ReactQueryProviders from '@/utils/ReactQueryProviders';
 
 const pretendard = localFont({
   src: '../assets/fonts/PretendardVariable.woff2',
@@ -23,7 +24,9 @@ export default function RootLayout({
   return (
     <html lang='en' className={`${pretendard.variable}`}>
       <body className={`${pretendard.className} bg-background`}>
-        <AuthContext>{children}</AuthContext>
+        <ReactQueryProviders>
+          <AuthContext>{children}</AuthContext>
+        </ReactQueryProviders>
       </body>
     </html>
   );
