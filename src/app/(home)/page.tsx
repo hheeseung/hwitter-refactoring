@@ -17,7 +17,7 @@ export default async function Home() {
   });
 
   return (
-    <section>
+    <section className='space-y-4'>
       <TweetUploadForm profileImg={user?.profileImg || ''} />
       <Tweets />
     </section>

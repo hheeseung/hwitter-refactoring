@@ -52,3 +52,25 @@ export async function POST(req: NextRequest) {
     );
   }
 }
+
+export async function GET() {
+  const tweets = await prisma.tweet.findMany({
+    select: {
+      id: true,
+      tweet: true,
+      image: true,
+      createdAt: true,
+      user: {
+        select: {
+          id: true,
+          username: true,
+          profileImg: true,
+        },
+      },
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+  });
+  return NextResponse.json(tweets, { status: 200 });
+}

@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import AuthContext from '@/context/AuthContext';
 import ReactQueryProviders from '@/utils/ReactQueryProviders';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 const pretendard = localFont({
   src: '../assets/fonts/PretendardVariable.woff2',
@@ -26,6 +27,7 @@ export default function RootLayout({
       <body className={`${pretendard.className} bg-background`}>
         <ReactQueryProviders>
           <AuthContext>{children}</AuthContext>
+          <ReactQueryDevtools initialIsOpen />
         </ReactQueryProviders>
       </body>
     </html>

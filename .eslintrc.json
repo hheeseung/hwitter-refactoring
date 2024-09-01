@@ -23,6 +23,7 @@
     "operator-linebreak": "off",
     "jsx-a11y/label-has-associated-control": "off",
     "@typescript-eslint/comma-dangle": "off",
-    "object-curly-newline": "off"
+    "object-curly-newline": "off",
+    "import/no-cycle": "off"
   }
 }

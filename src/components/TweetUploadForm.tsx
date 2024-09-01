@@ -87,6 +87,9 @@ export default function TweetUploadForm({ profileImg }: Props) {
             value={tweet}
             required
           />
+          {mutation.isError ? (
+            <span className='p-2 text-like'>{mutation.error.message}</span>
+          ) : null}
           <div className='flex justify-between items-center py-1'>
             {preview ? (
               <Image
