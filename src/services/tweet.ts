@@ -35,3 +35,19 @@ export async function getAllTweet() {
   const data = await res.json();
   return data;
 }
+
+export async function getTweetById(id: number) {
+  const res = await fetch(`/api/tweet/${id}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'same-origin',
+  });
+  if (!res.ok) {
+    throw new Error('Failed to fetch tweet');
+  }
+
+  const data = await res.json();
+  return data;
+}

@@ -4,7 +4,7 @@ import prisma from '@/lib/db';
 import { getSession } from '@/lib/session';
 
 export default async function Home() {
-  const userId = (await getSession()).id;
+  const userId = (await getSession()).id!;
   const user = await prisma.user.findUnique({
     where: {
       id: userId,

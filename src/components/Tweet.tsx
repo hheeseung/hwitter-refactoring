@@ -7,7 +7,7 @@ import { ITweet } from './Tweets';
 
 export default function Tweet({ tweet, image, user, createdAt }: ITweet) {
   return (
-    <li className='bg-white shadow-md p-5 rounded-xl'>
+    <li className='bg-white shadow-md p-5 rounded-xl mb-4 list-none'>
       <div className='flex items-center gap-2'>
         {user.profileImg ? (
           <Image

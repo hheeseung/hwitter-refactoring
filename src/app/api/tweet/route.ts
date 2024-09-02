@@ -72,5 +72,11 @@ export async function GET() {
       createdAt: 'desc',
     },
   });
-  return NextResponse.json(tweets, { status: 200 });
+
+  const session = await getSession();
+  if (!session || !session.id) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  } else {
+    return NextResponse.json(tweets, { status: 200 });
+  }
 }

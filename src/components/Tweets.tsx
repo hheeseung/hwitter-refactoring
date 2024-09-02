@@ -2,6 +2,7 @@
 
 import { getAllTweet } from '@/services/tweet';
 import { useQuery } from '@tanstack/react-query';
+import Link from 'next/link';
 import Tweet from './Tweet';
 
 export interface ITweet {
@@ -28,9 +29,11 @@ export default function Tweets() {
 
   return (
     <section className='overflow-y-scroll max-h-screen'>
-      <ul className='space-y-3'>
+      <ul>
         {data.map((tweet) => (
-          <Tweet key={tweet.id} {...tweet} />
+          <Link href={`/${tweet.id}`} key={tweet.id}>
+            <Tweet {...tweet} />
+          </Link>
         ))}
       </ul>
     </section>
