@@ -1,7 +1,7 @@
 import localFont from 'next/font/local';
 import type { Metadata } from 'next';
 import './globals.css';
-import AuthContext from '@/context/AuthContext';
+import NextAuthContext from '@/context/NextAuthContext';
 import ReactQueryProviders from '@/utils/ReactQueryProviders';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
@@ -26,7 +26,7 @@ export default function RootLayout({
     <html lang='en' className={`${pretendard.variable}`}>
       <body className={`${pretendard.className} bg-background`}>
         <ReactQueryProviders>
-          <AuthContext>{children}</AuthContext>
+          <NextAuthContext>{children}</NextAuthContext>
           <ReactQueryDevtools initialIsOpen />
         </ReactQueryProviders>
       </body>

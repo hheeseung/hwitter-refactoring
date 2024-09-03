@@ -8,23 +8,25 @@ import { ITweet } from './Tweets';
 export default function Tweet({ tweet, image, user, createdAt }: ITweet) {
   return (
     <li className='bg-white shadow-md p-5 rounded-xl mb-4 list-none'>
-      <div className='flex items-center gap-2'>
-        {user.profileImg ? (
-          <Image
-            width={45}
-            height={45}
-            className='rounded-xl'
-            src={user.profileImg}
-            alt={user.username}
-          />
-        ) : (
-          <UserIcon custom='size-11' />
-        )}
-        <div>
-          <p className='font-semibold'>{user.username}</p>
-          <p className='text-xs text-slate-500'>
-            {new Date(createdAt).toLocaleString('ko-KR')}
-          </p>
+      <div className='flex items-start justify-between'>
+        <div className='flex items-center gap-2'>
+          {user.profileImg ? (
+            <Image
+              width={45}
+              height={45}
+              className='rounded-xl'
+              src={user.profileImg}
+              alt={user.username}
+            />
+          ) : (
+            <UserIcon custom='size-11' />
+          )}
+          <div>
+            <p className='font-semibold'>{user.username}</p>
+            <p className='text-xs text-slate-500'>
+              {new Date(createdAt).toLocaleString('ko-KR')}
+            </p>
+          </div>
         </div>
       </div>
       <div className='space-y-5 px-1 py-4 border-b border-slate-200 mb-4'>

@@ -1,10 +1,12 @@
 import TweetUploadForm from '@/components/TweetUploadForm';
-import Tweets from '@/components/Tweets';
 import prisma from '@/lib/db';
 import { getSession } from '@/lib/session';
+import Tweets from '@/components/Tweets';
 
 export default async function Home() {
-  const userId = (await getSession()).id!;
+  const session = await getSession();
+  const userId = session.id!;
+
   const user = await prisma.user.findUnique({
     where: {
       id: userId,

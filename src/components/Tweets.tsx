@@ -1,8 +1,8 @@
 'use client';
 
-import { getAllTweet } from '@/services/tweet';
-import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
+import { useQuery } from '@tanstack/react-query';
+import { getAllTweet } from '@/services/tweet';
 import Tweet from './Tweet';
 
 export interface ITweet {
@@ -28,14 +28,12 @@ export default function Tweets() {
   if (isPending) return <p className='text-center'>Loading...</p>;
 
   return (
-    <section className='overflow-y-scroll max-h-screen'>
-      <ul>
-        {data.map((tweet) => (
-          <Link href={`/${tweet.id}`} key={tweet.id}>
-            <Tweet {...tweet} />
-          </Link>
-        ))}
-      </ul>
-    </section>
+    <ul>
+      {data.map((tweet) => (
+        <Link href={`/posts/${tweet.id}`} key={tweet.id}>
+          <Tweet {...tweet} />
+        </Link>
+      ))}
+    </ul>
   );
 }
