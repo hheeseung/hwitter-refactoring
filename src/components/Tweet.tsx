@@ -33,6 +33,7 @@ export default function Tweet({
                 className='rounded-xl'
                 src={user.profileImg}
                 alt={user.username}
+                priority
               />
             ) : (
               <UserIcon custom='size-11' />
@@ -58,7 +59,6 @@ export default function Tweet({
               height={400}
               alt='image'
               className='w-full h-[450px] object-contain'
-              priority
             />
           )}
           <p>{tweet}</p>

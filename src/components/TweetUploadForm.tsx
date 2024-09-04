@@ -64,7 +64,7 @@ export default function TweetUploadForm({ profileImg }: Props) {
   };
 
   return (
-    <section className='bg-white p-4 rounded-xl shadow-md'>
+    <section className='bg-white p-5 rounded-xl shadow-md'>
       <div className='flex gap-2 justify-between items-start'>
         {profileImg ? (
           <Image
@@ -73,6 +73,7 @@ export default function TweetUploadForm({ profileImg }: Props) {
             width={50}
             height={50}
             className='rounded-xl'
+            priority
           />
         ) : (
           <UserIcon custom='w-[45px] h-[45px]' />

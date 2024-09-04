@@ -77,6 +77,6 @@ export async function deleteTweet(id: number) {
     method: 'DELETE',
   });
   if (!res.ok) {
-    throw new Error('Failed to edit tweet');
+    throw new Error('Failed to delete tweet');
   }
 }

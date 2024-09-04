@@ -5,7 +5,7 @@ import { HiOutlineXMark } from 'react-icons/hi2';
 import { FiEdit } from 'react-icons/fi';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteTweet } from '@/services/tweet';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 interface Props {
   id: number;
@@ -13,6 +13,7 @@ interface Props {
 }
 
 export default function ActionButtons({ id, setIsEdit }: Props) {
+  const pathname = usePathname();
   const router = useRouter();
   const queryClient = useQueryClient();
 
@@ -20,7 +21,9 @@ export default function ActionButtons({ id, setIsEdit }: Props) {
     mutationFn: deleteTweet,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['tweets'] });
-      router.push('/');
+      if (pathname === `/posts/${id}`) {
+        router.push('/');
+      }
     },
   });
 
