@@ -29,7 +29,34 @@ export async function GET(
   return NextResponse.json(tweet, { status: 200 });
 }
 
-export async function DELETE({ params }: { params: { id: string } }) {
+export async function PUT(
+  req: NextRequest,
+  {
+    params,
+  }: {
+    params: { id: string };
+  }
+) {
+  const { id } = params;
+  const { tweet } = await req.json();
+  const editedTweet = await prisma.tweet.update({
+    where: {
+      id: Number(id),
+    },
+    data: {
+      tweet,
+    },
+    select: {
+      tweet: true,
+    },
+  });
+  return NextResponse.json(editedTweet, { status: 200 });
+}
+
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
   const { id } = params;
   await prisma.tweet.delete({
     where: {
@@ -37,5 +64,5 @@ export async function DELETE({ params }: { params: { id: string } }) {
     },
   });
 
-  return NextResponse.json({ status: 200 });
+  return NextResponse.json({ status: 204 });
 }

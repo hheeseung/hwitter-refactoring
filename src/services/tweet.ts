@@ -3,6 +3,11 @@ interface CreateProps {
   image: string;
 }
 
+export interface EditProps {
+  id: number;
+  tweet: string;
+}
+
 export async function createTweet({ tweet, image }: CreateProps) {
   const res = await fetch('/api/tweet', {
     method: 'POST',
@@ -50,4 +55,28 @@ export async function getTweetById(id: number) {
 
   const data = await res.json();
   return data;
+}
+
+export async function updateTweet({ id, tweet }: EditProps) {
+  const res = await fetch(`/api/tweet/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ tweet }),
+  });
+  if (!res.ok) {
+    throw new Error('Failed to edit tweet');
+  }
+  const data = await res.json();
+  return data;
+}
+
+export async function deleteTweet(id: number) {
+  const res = await fetch(`/api/tweet/${id}`, {
+    method: 'DELETE',
+  });
+  if (!res.ok) {
+    throw new Error('Failed to edit tweet');
+  }
 }

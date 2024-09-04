@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
 import { getAllTweet } from '@/services/tweet';
 import Tweet from './Tweet';
@@ -17,7 +16,7 @@ export interface ITweet {
   };
 }
 
-export default function Tweets() {
+export default function Tweets({ userId }: { userId: number }) {
   const { data, isError, error, isPending } = useQuery<ITweet[]>({
     queryFn: getAllTweet,
     queryKey: ['tweets'],
@@ -30,9 +29,7 @@ export default function Tweets() {
   return (
     <ul>
       {data.map((tweet) => (
-        <Link href={`/posts/${tweet.id}`} key={tweet.id}>
-          <Tweet {...tweet} />
-        </Link>
+        <Tweet userId={userId} key={tweet.id} {...tweet} />
       ))}
     </ul>
   );
