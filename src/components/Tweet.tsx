@@ -49,21 +49,20 @@ export default function Tweet({
           )}
         </div>
       </div>
-      <Link
-        href={`/posts/${id}`}
-        className='space-y-5 px-1 py-4 border-b border-slate-200 mb-4'
-      >
-        {image && (
-          <Image
-            src={`${image}/public`}
-            width={500}
-            height={400}
-            alt='image'
-            className='w-full h-[450px] object-contain'
-            priority
-          />
-        )}
-        <p>{tweet}</p>
+      <Link href={`/posts/${id}`}>
+        <div className='space-y-5 px-1 py-4 border-b border-slate-200 mb-4'>
+          {image && (
+            <Image
+              src={`${image}/public`}
+              width={500}
+              height={400}
+              alt='image'
+              className='w-full h-[450px] object-contain'
+              priority
+            />
+          )}
+          <p>{tweet}</p>
+        </div>
       </Link>
       {isEdit ? <EditForm setIsEdit={setIsEdit} id={id} tweet={tweet} /> : null}
       <div className='flex justify-end items-center'>
