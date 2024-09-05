@@ -30,13 +30,17 @@ export default function Tweet({
               <Image
                 width={45}
                 height={45}
-                className='rounded-xl'
-                src={user.profileImg}
+                className='rounded-xl size-11 object-cover'
+                src={
+                  user.profileImg.includes('imagedelivery')
+                    ? `${user.profileImg}/public`
+                    : user.profileImg
+                }
                 alt={user.username}
                 priority
               />
             ) : (
-              <UserIcon custom='size-11' />
+              <UserIcon custom='size-11 rounded-xl p-2' />
             )}
             <div>
               <p className='font-semibold'>{user.username}</p>
@@ -66,7 +70,7 @@ export default function Tweet({
       </Link>
       {isEdit ? <EditForm setIsEdit={setIsEdit} id={id} tweet={tweet} /> : null}
       <div className='flex justify-end items-center'>
-        <div className='flex items-center gap-3 px-1'>
+        <div className='flex items-center gap-3 px-1 text-slate-500'>
           <IoMdHeartEmpty className='size-7' />
           <TfiComment className='size-6' />
           <IoShareSocialOutline className='size-6' />

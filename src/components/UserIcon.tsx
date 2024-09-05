@@ -6,8 +6,6 @@ interface Props {
 
 export default function UserIcon({ custom }: Props) {
   return (
-    <FaUser
-      className={`text-primary bg-background rounded-xl p-2 shadow-sm ${custom}`}
-    />
+    <FaUser className={`text-primary bg-background shadow-sm ${custom}`} />
   );
 }

@@ -68,15 +68,19 @@ export default function TweetUploadForm({ profileImg }: Props) {
       <div className='flex gap-2 justify-between items-start'>
         {profileImg ? (
           <Image
-            src={profileImg}
+            src={
+              profileImg.includes('imagedelivery')
+                ? `${profileImg}/public`
+                : profileImg
+            }
             alt='user-profile'
             width={50}
             height={50}
-            className='rounded-xl'
+            className='rounded-xl size-11 object-cover'
             priority
           />
         ) : (
-          <UserIcon custom='w-[45px] h-[45px]' />
+          <UserIcon custom='w-[45px] h-[45px] rounded-xl p-2' />
         )}
         <form onSubmit={handleSubmit} className='flex flex-col w-full'>
           <textarea

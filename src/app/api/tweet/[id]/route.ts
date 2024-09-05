@@ -2,7 +2,7 @@ import prisma from '@/lib/db';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(
-  req: NextRequest,
+  _req: NextRequest,
   { params }: { params: { id: string } }
 ) {
   const { id } = params;
@@ -54,7 +54,7 @@ export async function PUT(
 }
 
 export async function DELETE(
-  req: NextRequest,
+  _req: NextRequest,
   { params }: { params: { id: string } }
 ) {
   const { id } = params;

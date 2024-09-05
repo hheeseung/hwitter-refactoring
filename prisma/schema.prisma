@@ -8,14 +8,15 @@ datasource db {
 }
 
 model User {
-  id         Int      @id @default(autoincrement())
-  username   String   @unique
-  email      String   @unique
-  password   String?
-  profileImg String?
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  Tweet      Tweet[]
+  id           Int      @id @default(autoincrement())
+  username     String   @unique
+  email        String   @unique
+  password     String?
+  profileImg   String?
+  profileImgId String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  Tweet        Tweet[]
 }
 
 model Tweet {

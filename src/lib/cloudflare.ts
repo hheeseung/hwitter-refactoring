@@ -1,5 +1,5 @@
 interface Props {
-  preview: string;
+  preview: string | null;
   imageFile: File | null;
   uploadUrl: string;
   imageId: string;
@@ -36,4 +36,10 @@ export async function getImageURL({
     const imageURL = `https://imagedelivery.net/TkBJiZLQuPhAy6jY41Kdvg/${imageId}`;
     return imageURL;
   }
+}
+
+export async function deleteImageURL(profileImgId: string) {
+  await fetch(`/api/cloudflare?profileImgId=${profileImgId}`, {
+    method: 'DELETE',
+  });
 }

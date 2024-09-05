@@ -24,14 +24,18 @@ export default async function UserInfo() {
         <>
           {user.profileImg ? (
             <Image
-              src={user.profileImg}
+              src={
+                user.profileImg.includes('imagedelivery')
+                  ? `${user.profileImg}/public`
+                  : user.profileImg
+              }
               alt='profile'
               width={45}
               height={45}
-              className='rounded-xl'
+              className='rounded-xl size-11 object-cover'
             />
           ) : (
-            <UserIcon custom='size-11' />
+            <UserIcon custom='size-11 rounded-xl p-2' />
           )}
           <div className='flex flex-col'>
             <span className='font-semibold'>{user.username}</span>

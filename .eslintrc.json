@@ -20,6 +20,7 @@
     "no-else-return": "off",
     "consistent-return": "off",
     "no-alert": "off",
+    "no-console": "off",
     "operator-linebreak": "off",
     "jsx-a11y/label-has-associated-control": "off",
     "@typescript-eslint/comma-dangle": "off",

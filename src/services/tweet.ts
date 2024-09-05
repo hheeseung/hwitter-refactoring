@@ -64,6 +64,7 @@ export async function updateTweet({ id, tweet }: EditProps) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ tweet }),
+    credentials: 'same-origin',
   });
   if (!res.ok) {
     throw new Error('Failed to edit tweet');
@@ -75,6 +76,7 @@ export async function updateTweet({ id, tweet }: EditProps) {
 export async function deleteTweet(id: number) {
   const res = await fetch(`/api/tweet/${id}`, {
     method: 'DELETE',
+    credentials: 'same-origin',
   });
   if (!res.ok) {
     throw new Error('Failed to delete tweet');
