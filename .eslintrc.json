@@ -26,6 +26,8 @@
     "@typescript-eslint/comma-dangle": "off",
     "object-curly-newline": "off",
     "import/no-cycle": "off",
-    "react/jsx-no-useless-fragment": "off"
+    "react/jsx-no-useless-fragment": "off",
+    "nonblock-statement-body-position": "off",
+    "curly": "off"
   }
 }

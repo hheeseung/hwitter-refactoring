@@ -3,6 +3,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getAllTweet } from '@/services/tweet';
 import Tweet from './Tweet';
+import TweetsSkeleton from './TweetsSkeleton';
 
 export interface ITweet {
   id: number;
@@ -24,7 +25,10 @@ export default function Tweets({ userId }: { userId: number }) {
 
   if (isError) return <p className='text-center'>{error.message}</p>;
 
-  if (isPending) return <p className='text-center'>Loading...</p>;
+  if (isPending)
+    return new Array(10)
+      .fill(null)
+      .map((_, index) => <TweetsSkeleton key={index} />);
 
   return (
     <ul>
