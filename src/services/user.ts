@@ -4,9 +4,24 @@ interface IUpdateProfileImg {
   profileImgId: string;
 }
 
-interface IUpdateUsername {
+export interface IUpdateUsername {
   id: number;
   username: string;
+}
+
+export async function getUser(id: number) {
+  const res = await fetch(`/api/user/${id}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'same-origin',
+  });
+  if (!res.ok) {
+    throw new Error('Failed to fetch user');
+  }
+  const data = await res.json();
+  return data;
 }
 
 export async function updateUserProfile({
@@ -20,6 +35,7 @@ export async function updateUserProfile({
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ profileImg, profileImgId }),
+    credentials: 'same-origin',
   });
   if (!res.ok) {
     throw new Error('Failed to update profile image');
@@ -34,6 +50,7 @@ export async function updateUsername({ id, username }: IUpdateUsername) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ username }),
+    credentials: 'same-origin',
   });
   if (!res.ok) {
     throw new Error('Failed to update username');

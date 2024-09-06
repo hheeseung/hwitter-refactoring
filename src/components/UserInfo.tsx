@@ -1,22 +1,25 @@
-import prisma from '@/lib/db';
-import { getSession } from '@/lib/session';
+'use client';
+
 import Image from 'next/image';
+import { useQuery } from '@tanstack/react-query';
+import { getUser } from '@/services/user';
 import UserIcon from './UserIcon';
+import UserSkeleton from './UserSkeleton';
 
-export default async function UserInfo() {
-  const { id } = await getSession();
-
-  const user = await prisma.user.findUnique({
-    where: {
-      id,
-    },
-    select: {
-      id: true,
-      username: true,
-      email: true,
-      profileImg: true,
-    },
+export default function UserInfo({ id }: { id: number }) {
+  const {
+    data: user,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ['user', id],
+    queryFn: () => getUser(id),
   });
+
+  if (isLoading) return <UserSkeleton />;
+
+  if (isError) return <p>{error.message}</p>;
 
   return (
     <article className='bg-white flex items-center gap-3 w-full rounded-xl p-4 shadow-md mb-3'>

@@ -3,7 +3,12 @@
 import Image from 'next/image';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { deleteImageURL, getImageURL, getUploadURL } from '@/lib/cloudflare';
-import { updateUsername, updateUserProfile } from '@/services/user';
+import {
+  IUpdateUsername,
+  updateUsername,
+  updateUserProfile,
+} from '@/services/user';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import UserIcon from './UserIcon';
 
 interface Props {
@@ -18,6 +23,7 @@ interface Props {
 export default function EditUser({
   user: { id: userId, profileImg, username, profileImgId },
 }: Props) {
+  const queryClient = useQueryClient();
   const [preview, setPreview] = useState(profileImg);
   const [imageId, setImageId] = useState('');
   const [uploadUrl, setUploadUrl] = useState('');
@@ -26,6 +32,34 @@ export default function EditUser({
   const [isUploading, setIsUploading] = useState(false);
   const [isImageSubmitting, setImageSubmitting] = useState(false);
   const [isNameSubmitting, setIsNameSubmitting] = useState(false);
+
+  const imgMutation = useMutation({
+    mutationKey: ['user', userId],
+    mutationFn: ({
+      id,
+      image,
+      imgId,
+    }: {
+      id: number;
+      image: string;
+      imgId: string;
+    }) => updateUserProfile({ id, profileImg: image, profileImgId: imgId }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['tweets'] });
+      queryClient.invalidateQueries({ queryKey: ['user', userId] });
+    },
+  });
+
+  const usernameMutation = useMutation({
+    mutationKey: ['user', userId],
+    mutationFn: (newUsername: IUpdateUsername) => updateUsername(newUsername),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['tweets'] });
+      queryClient.invalidateQueries({ queryKey: ['user', userId] });
+      window.alert('닉네임 변경에 성공했습니다.');
+    },
+    onError: () => window.alert('닉네임 변경에 실패했습니다.'),
+  });
 
   const onImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
@@ -87,15 +121,17 @@ export default function EditUser({
         await deleteImageURL(profileImgId);
       }
 
-      const res = await updateUserProfile({
+      imgMutation.mutate({
         id: userId,
-        profileImg: imageURL!,
-        profileImgId: imageId,
+        image: imageURL!,
+        imgId: imageId,
       });
 
-      if (res.ok) {
+      if (imgMutation.isSuccess) {
         window.alert('프로필 이미지가 성공적으로 변경되었습니다.');
-      } else {
+      }
+
+      if (imgMutation.isError) {
         window.alert('프로필 이미지 변경에 실패했습니다.');
       }
     } catch (error) {
@@ -119,13 +155,7 @@ export default function EditUser({
     setIsNameSubmitting(true);
 
     try {
-      const res = await updateUsername({ id: userId, username: name });
-
-      if (res.ok) {
-        window.alert('닉네임이 성공적으로 변경되었습니다.');
-      } else {
-        window.alert('닉네임 변경에 실패했습니다.');
-      }
+      usernameMutation.mutate({ id: userId, username: name });
     } catch (error) {
       console.error('닉네임 변경 중 에러 발생:', error);
       window.alert('닉네임 변경 중 에러가 발생했습니다.');
