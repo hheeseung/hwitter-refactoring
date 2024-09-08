@@ -47,7 +47,9 @@ export default function EditUser({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['tweets'] });
       queryClient.invalidateQueries({ queryKey: ['user', userId] });
+      window.alert('프로필 이미지가 변경되었습니다.');
     },
+    onError: () => window.alert('프로필 이미지 변경에 실패했습니다.'),
   });
 
   const usernameMutation = useMutation({
@@ -56,9 +58,9 @@ export default function EditUser({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['tweets'] });
       queryClient.invalidateQueries({ queryKey: ['user', userId] });
-      window.alert('닉네임 변경에 성공했습니다.');
+      window.alert('사용자 이름이 변경되었습니다.');
     },
-    onError: () => window.alert('닉네임 변경에 실패했습니다.'),
+    onError: () => window.alert('사용자 이름 변경에 실패했습니다.'),
   });
 
   const onImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -126,14 +128,6 @@ export default function EditUser({
         image: imageURL!,
         imgId: imageId,
       });
-
-      if (imgMutation.isSuccess) {
-        window.alert('프로필 이미지가 성공적으로 변경되었습니다.');
-      }
-
-      if (imgMutation.isError) {
-        window.alert('프로필 이미지 변경에 실패했습니다.');
-      }
     } catch (error) {
       console.error('이미지 변경 중 에러 발생:', error);
       window.alert('이미지 변경 중 에러가 발생했습니다.');

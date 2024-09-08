@@ -16,7 +16,7 @@ interface Props {
   setIsEdit: Dispatch<SetStateAction<boolean>>;
 }
 
-export default function EditForm({ id, tweet, setIsEdit }: Props) {
+export default function TweetEditForm({ id, tweet, setIsEdit }: Props) {
   const queryClient = useQueryClient();
   const [editedTweet, setEditedTweet] = useState(tweet);
 

@@ -9,7 +9,7 @@ import { useState } from 'react';
 import UserIcon from './UserIcon';
 import { ITweet } from './Tweets';
 import ActionButtons from './ActionButtons';
-import EditForm from './EditForm';
+import TweetEditForm from './TweetEditForm';
 
 export default function Tweet({
   id,
@@ -68,7 +68,9 @@ export default function Tweet({
           <p>{tweet}</p>
         </div>
       </Link>
-      {isEdit ? <EditForm setIsEdit={setIsEdit} id={id} tweet={tweet} /> : null}
+      {isEdit ? (
+        <TweetEditForm setIsEdit={setIsEdit} id={id} tweet={tweet} />
+      ) : null}
       <div className='flex justify-end items-center'>
         <div className='flex items-center gap-3 px-1 text-slate-500'>
           <IoMdHeartEmpty className='size-7' />
