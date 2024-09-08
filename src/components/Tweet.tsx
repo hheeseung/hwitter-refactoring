@@ -30,7 +30,7 @@ export default function Tweet({
               <Image
                 width={45}
                 height={45}
-                className='rounded-xl size-11 object-cover'
+                className='rounded-xl size-11 object-cover aspect-square'
                 src={
                   user.profileImg.includes('imagedelivery')
                     ? `${user.profileImg}/public`

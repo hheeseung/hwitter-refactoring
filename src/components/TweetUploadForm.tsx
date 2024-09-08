@@ -76,7 +76,7 @@ export default function TweetUploadForm({ profileImg }: Props) {
             alt='user-profile'
             width={50}
             height={50}
-            className='rounded-xl size-11 object-cover'
+            className='rounded-xl size-11 object-cover aspect-square'
             priority
           />
         ) : (

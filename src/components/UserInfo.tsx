@@ -35,7 +35,7 @@ export default function UserInfo({ id }: { id: number }) {
               alt='profile'
               width={45}
               height={45}
-              className='rounded-xl size-11 object-cover'
+              className='rounded-xl size-11 object-cover aspect-square'
             />
           ) : (
             <UserIcon custom='size-11 rounded-xl p-2' />
