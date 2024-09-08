@@ -6,7 +6,7 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import { getImageURL, getUploadURL } from '@/lib/cloudflare';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createTweet } from '@/services/tweet';
-import UserIcon from './UserIcon';
+import UserIcon from '../ui/UserIcon';
 
 interface Props {
   profileImg: string;

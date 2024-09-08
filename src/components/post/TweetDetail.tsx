@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
 import Tweet from './Tweet';
 import { ITweet } from './Tweets';
-import TweetsSkeleton from './TweetsSkeleton';
+import TweetsSkeleton from '../ui/TweetsSkeleton';
 
 export default function TweetDetail({ userId }: { userId: number }) {
   const { id } = useParams();

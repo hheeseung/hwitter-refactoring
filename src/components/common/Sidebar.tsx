@@ -1,7 +1,7 @@
 import { getSession } from '@/lib/session';
 import Navbar from './Navbar';
-import UserInfo from './UserInfo';
-import LogoutButton from './LogoutButton';
+import UserInfo from '../user/UserInfo';
+import LogoutButton from '../auth/LogoutButton';
 
 export default async function Sidebar() {
   const { id } = await getSession();

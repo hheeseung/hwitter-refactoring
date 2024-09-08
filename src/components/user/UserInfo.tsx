@@ -3,8 +3,8 @@
 import Image from 'next/image';
 import { useQuery } from '@tanstack/react-query';
 import { getUser } from '@/services/user';
-import UserIcon from './UserIcon';
-import UserSkeleton from './UserSkeleton';
+import UserIcon from '../ui/UserIcon';
+import UserSkeleton from '../ui/UserSkeleton';
 
 export default function UserInfo({ id }: { id: number }) {
   const {

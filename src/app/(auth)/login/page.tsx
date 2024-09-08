@@ -1,5 +1,5 @@
-import GoogleLoginButton from '@/components/GoogleLoginButton';
-import LoginForm from '@/components/LoginForm';
+import GoogleLoginButton from '@/components/auth/GoogleLoginButton';
+import LoginForm from '@/components/auth/LoginForm';
 import Link from 'next/link';
 
 export default function Login() {

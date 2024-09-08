@@ -1,7 +1,7 @@
-import TweetUploadForm from '@/components/TweetUploadForm';
+import TweetUploadForm from '@/components/post/TweetUploadForm';
 import prisma from '@/lib/db';
 import { getSession } from '@/lib/session';
-import Tweets from '@/components/Tweets';
+import Tweets from '@/components/post/Tweets';
 
 export default async function Home() {
   const session = await getSession();

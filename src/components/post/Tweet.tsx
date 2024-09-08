@@ -6,9 +6,9 @@ import { TfiComment } from 'react-icons/tfi';
 import { IoShareSocialOutline } from 'react-icons/io5';
 import Link from 'next/link';
 import { useState } from 'react';
-import UserIcon from './UserIcon';
+import UserIcon from '../ui/UserIcon';
 import { ITweet } from './Tweets';
-import ActionButtons from './ActionButtons';
+import ActionButtons from '../common/ActionButtons';
 import TweetEditForm from './TweetEditForm';
 
 export default function Tweet({

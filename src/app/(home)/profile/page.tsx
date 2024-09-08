@@ -1,6 +1,6 @@
-import EditUser from '@/components/EditUser';
 import prisma from '@/lib/db';
 import { getSession } from '@/lib/session';
+import EditUser from '@/components/user/EditUser';
 
 export default async function Profile() {
   const session = await getSession();

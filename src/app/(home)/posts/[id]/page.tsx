@@ -1,4 +1,4 @@
-import TweetDetail from '@/components/TweetDetail';
+import TweetDetail from '@/components/post/TweetDetail';
 import { getSession } from '@/lib/session';
 
 export default async function Detail() {

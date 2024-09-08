@@ -1,6 +1,6 @@
-import Header from '@/components/Header';
-import Sidebar from '@/components/Sidebar';
-import Social from '@/components/Social';
+import Header from '@/components/common/Header';
+import Sidebar from '@/components/common/Sidebar';
+import Social from '@/components/ui/Social';
 
 interface LayoutProps {
   children: React.ReactNode;

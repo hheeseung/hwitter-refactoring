@@ -3,7 +3,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getAllTweet } from '@/services/tweet';
 import Tweet from './Tweet';
-import TweetsSkeleton from './TweetsSkeleton';
+import TweetsSkeleton from '../ui/TweetsSkeleton';
 
 export interface ITweet {
   id: number;

@@ -9,7 +9,7 @@ import {
   updateUserProfile,
 } from '@/services/user';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import UserIcon from './UserIcon';
+import UserIcon from '../ui/UserIcon';
 
 interface Props {
   user: {

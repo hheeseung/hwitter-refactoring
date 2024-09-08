@@ -1,5 +1,5 @@
-import GoogleLoginButton from '@/components/GoogleLoginButton';
-import SignupForm from '@/components/SignupForm';
+import GoogleLoginButton from '@/components/auth/GoogleLoginButton';
+import SignupForm from '@/components/auth/SignupForm';
 import Link from 'next/link';
 
 export default function CreateAccount() {
