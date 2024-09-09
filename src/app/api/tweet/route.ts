@@ -53,7 +53,10 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.nextUrl);
+  const page = searchParams.get('page');
+
   const tweets = await prisma.tweet.findMany({
     select: {
       id: true,
@@ -68,15 +71,23 @@ export async function GET() {
         },
       },
     },
+    skip: (Number(page) - 1) * 1,
+    take: 10,
     orderBy: {
       createdAt: 'desc',
     },
   });
 
+  const hasNextPage = tweets.length === 10;
+
   const session = await getSession();
   if (!session || !session.id) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   } else {
-    return NextResponse.json(tweets, { status: 200 });
+    return NextResponse.json(
+      // tweets,
+      { tweets, hasNextPage },
+      { status: 200 }
+    );
   }
 }

@@ -28,6 +28,8 @@
     "import/no-cycle": "off",
     "react/jsx-no-useless-fragment": "off",
     "nonblock-statement-body-position": "off",
+    "implicit-arrow-linebreak": "off",
+    "function-paren-newline": "off",
     "curly": "off"
   }
 }

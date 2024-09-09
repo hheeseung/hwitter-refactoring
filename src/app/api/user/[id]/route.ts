@@ -69,7 +69,7 @@ export async function GET(req: NextRequest, { params }: Props) {
 
 export async function PUT(req: NextRequest, { params }: Props) {
   const { id } = params;
-  const { searchParams } = new URL(req.url);
+  const { searchParams } = new URL(req.nextUrl);
   const action = searchParams.get('action');
 
   try {
