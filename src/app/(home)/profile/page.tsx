@@ -1,6 +1,7 @@
 import prisma from '@/lib/db';
 import { getSession } from '@/lib/session';
 import EditUser from '@/components/user/EditUser';
+import UserPostList from '@/components/user/UserPostList';
 
 export default async function Profile() {
   const session = await getSession();
@@ -20,9 +21,8 @@ export default async function Profile() {
   return (
     <section>
       <EditUser user={user!} />
-      <article>
-        <h1>여기는 사용자 작성 포스팅 보여주기</h1>
-      </article>
+      <p className='mt-10 mb-5 px-2 font-bold text-xl text-center'>My Post</p>
+      <UserPostList userId={userId} />
     </section>
   );
 }

@@ -1,4 +1,5 @@
 import prisma from '@/lib/db';
+import { getSession } from '@/lib/session';
 import { NextRequest, NextResponse } from 'next/server';
 
 interface Props {
@@ -7,23 +8,82 @@ interface Props {
   };
 }
 
-export async function GET(_req: NextRequest, { params }: Props) {
-  const { id } = params;
-  try {
-    const getUser = await prisma.user.findUnique({
-      where: {
-        id: Number(id),
-      },
-      select: {
-        id: true,
-        email: true,
-        username: true,
-        profileImg: true,
-        profileImgId: true,
-      },
-    });
+// export async function GET(_req: NextRequest, { params }: Props) {
+//   const { id } = params;
+//   try {
+//     const getUser = await prisma.user.findUnique({
+//       where: {
+//         id: Number(id),
+//       },
+//       select: {
+//         id: true,
+//         email: true,
+//         username: true,
+//         profileImg: true,
+//         profileImgId: true,
+//       },
+//     });
 
-    return NextResponse.json(getUser, { status: 200 });
+//     return NextResponse.json(getUser, { status: 200 });
+//   } catch (error) {
+//     return NextResponse.json(
+//       { message: 'Failed to find user' },
+//       { status: 500 }
+//     );
+//   }
+// }
+
+export async function GET(req: NextRequest, { params }: Props) {
+  const { id } = params;
+  const { searchParams } = new URL(req.url);
+  const action = searchParams.get('action');
+
+  const session = await getSession();
+  const userId = session.id!;
+
+  try {
+    if (action === 'getUser') {
+      const getUser = await prisma.user.findUnique({
+        where: {
+          id: Number(id),
+        },
+        select: {
+          id: true,
+          email: true,
+          username: true,
+          profileImg: true,
+          profileImgId: true,
+        },
+      });
+
+      return NextResponse.json(getUser, { status: 200 });
+    }
+
+    if (action === 'getUserPost') {
+      const userPost = await prisma.tweet.findMany({
+        where: {
+          userId,
+        },
+        select: {
+          id: true,
+          tweet: true,
+          image: true,
+          createdAt: true,
+          user: {
+            select: {
+              id: true,
+              username: true,
+              profileImg: true,
+            },
+          },
+        },
+        orderBy: {
+          createdAt: 'desc',
+        },
+      });
+
+      return NextResponse.json(userPost, { status: 200 });
+    }
   } catch (error) {
     return NextResponse.json(
       { message: 'Failed to find user' },

@@ -10,7 +10,22 @@ export interface IUpdateUsername {
 }
 
 export async function getUser(id: number) {
-  const res = await fetch(`/api/user/${id}`, {
+  const res = await fetch(`/api/user/${id}?action=getUser`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'same-origin',
+  });
+  if (!res.ok) {
+    throw new Error('Failed to fetch user');
+  }
+  const data = await res.json();
+  return data;
+}
+
+export async function getUserPost(id: number) {
+  const res = await fetch(`/api/user/${id}?action=getUserPost`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
