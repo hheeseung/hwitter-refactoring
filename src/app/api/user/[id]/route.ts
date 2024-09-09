@@ -8,31 +8,6 @@ interface Props {
   };
 }
 
-// export async function GET(_req: NextRequest, { params }: Props) {
-//   const { id } = params;
-//   try {
-//     const getUser = await prisma.user.findUnique({
-//       where: {
-//         id: Number(id),
-//       },
-//       select: {
-//         id: true,
-//         email: true,
-//         username: true,
-//         profileImg: true,
-//         profileImgId: true,
-//       },
-//     });
-
-//     return NextResponse.json(getUser, { status: 200 });
-//   } catch (error) {
-//     return NextResponse.json(
-//       { message: 'Failed to find user' },
-//       { status: 500 }
-//     );
-//   }
-// }
-
 export async function GET(req: NextRequest, { params }: Props) {
   const { id } = params;
   const { searchParams } = new URL(req.url);
