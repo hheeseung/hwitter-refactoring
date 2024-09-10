@@ -80,7 +80,7 @@ export default function TweetUploadForm({ profileImg }: Props) {
             priority
           />
         ) : (
-          <UserIcon custom='w-[45px] h-[45px] rounded-xl p-2' />
+          <UserIcon custom='size-12 rounded-xl p-2' />
         )}
         <form onSubmit={handleSubmit} className='flex flex-col w-full'>
           <textarea

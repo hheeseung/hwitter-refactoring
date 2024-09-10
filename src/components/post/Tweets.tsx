@@ -2,6 +2,9 @@
 
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getAllTweet } from '@/services/tweet';
+import { useEffect } from 'react';
+import { useInView } from 'react-intersection-observer';
+import { FaSpinner } from 'react-icons/fa';
 import Tweet from './Tweet';
 import TweetsSkeleton from '../ui/TweetsSkeleton';
 
@@ -29,8 +32,8 @@ export default function Tweets({ userId }: { userId: number }) {
     error,
     isFetching,
     fetchNextPage,
-    isFetchingNextPage,
     hasNextPage,
+    isFetchingNextPage,
   } = useInfiniteQuery<PageData>({
     queryFn: ({ pageParam }) => getAllTweet({ page: pageParam }),
     queryKey: ['tweets'],
@@ -43,10 +46,19 @@ export default function Tweets({ userId }: { userId: number }) {
       }
     },
   });
+  const { ref, inView } = useInView({
+    threshold: 1,
+  });
+
+  useEffect(() => {
+    if (inView && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [fetchNextPage, hasNextPage, inView]);
 
   if (isError) return <p className='text-center'>{error.message}</p>;
 
-  if (isFetching)
+  if (isFetching && !isFetchingNextPage)
     return new Array(10)
       .fill(null)
       .map((_, index) => <TweetsSkeleton key={index} />);
@@ -58,15 +70,10 @@ export default function Tweets({ userId }: { userId: number }) {
           <Tweet userId={userId} key={tweet.id} {...tweet} />
         ))
       )}
-      <div className='flex justify-center items-center'>
-        <button
-          type='button'
-          onClick={() => fetchNextPage()}
-          disabled={!hasNextPage || isFetchingNextPage}
-        >
-          {hasNextPage ? 'Load More' : ''}
-        </button>
-      </div>
+      <div ref={ref} />
+      {isFetchingNextPage && (
+        <FaSpinner className='mx-auto text-blue-400 size-8 animate-spin' />
+      )}
     </ul>
   );
 }

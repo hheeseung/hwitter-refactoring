@@ -84,10 +84,6 @@ export async function GET(req: NextRequest) {
   if (!session || !session.id) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   } else {
-    return NextResponse.json(
-      // tweets,
-      { tweets, hasNextPage },
-      { status: 200 }
-    );
+    return NextResponse.json({ tweets, hasNextPage }, { status: 200 });
   }
 }
