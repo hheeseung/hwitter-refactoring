@@ -15,12 +15,12 @@ export default function LogoutButton() {
 
   return (
     <form
-      className='border-none text-start hover:bg-background font-semibold text-like hover:rounded-b-xl'
+      className='border-none text-start lg:hover:bg-background font-semibold text-like hover:rounded-b-xl'
       action={handleLogout}
     >
       <button className='flex items-center gap-3' type='submit'>
-        <TbLogout2 className='size-6' />
-        <span>Logout</span>
+        <TbLogout2 className='size-7 lg:size-6' />
+        <span className='hidden lg:block'>Logout</span>
       </button>
     </form>
   );

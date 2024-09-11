@@ -7,7 +7,7 @@ export default async function Sidebar() {
   const { id } = await getSession();
 
   return (
-    <aside className='w-1/4'>
+    <aside className='hidden lg:block lg:w-1/4'>
       <UserInfo id={id!} />
       <nav className='bg-white *:p-5 *:border-b *:w-full shadow-md rounded-xl flex flex-col items-start justify-center'>
         <Navbar />

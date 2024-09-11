@@ -27,7 +27,7 @@ export default function RootLayout({
       <body className={`${pretendard.className} bg-background`}>
         <ReactQueryProviders>
           <NextAuthContext>{children}</NextAuthContext>
-          <ReactQueryDevtools initialIsOpen />
+          {/* <ReactQueryDevtools initialIsOpen /> */}
         </ReactQueryProviders>
       </body>
     </html>
