@@ -21,9 +21,11 @@ export default function UserPostList({ userId }: { userId: number }) {
 
   return (
     <article>
-      {data.map((post) => (
-        <Tweet key={post.id} {...post} userId={userId} />
-      ))}
+      {data.length !== 0 ? (
+        data.map((post) => <Tweet key={post.id} {...post} userId={userId} />)
+      ) : (
+        <p className='text-center'>작성한 글이 없습니다.</p>
+      )}
     </article>
   );
 }
