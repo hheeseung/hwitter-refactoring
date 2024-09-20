@@ -5,5 +5,9 @@ export default async function Detail() {
   const session = await getSession();
   const userId = session.id!;
 
-  return <TweetDetail userId={userId} />;
+  return (
+    <section className='relative'>
+      <TweetDetail userId={userId} />
+    </section>
+  );
 }

@@ -44,6 +44,14 @@ export async function GET(req: NextRequest, { params }: Props) {
           tweet: true,
           image: true,
           createdAt: true,
+          comments: true,
+          likes: true,
+          _count: {
+            select: {
+              likes: true,
+              comments: true,
+            },
+          },
           user: {
             select: {
               id: true,

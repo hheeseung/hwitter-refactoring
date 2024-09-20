@@ -1,22 +1,22 @@
 'use client';
 
 import Image from 'next/image';
-import { IoMdHeartEmpty } from 'react-icons/io';
-import { TfiComment } from 'react-icons/tfi';
-import { IoShareSocialOutline } from 'react-icons/io5';
 import Link from 'next/link';
 import { useState } from 'react';
 import UserIcon from '../ui/UserIcon';
 import { ITweet } from './Tweets';
 import ActionButtons from '../common/ActionButtons';
 import TweetEditForm from './TweetEditForm';
+import UserInteractions from '../common/UserInteractions';
 
 export default function Tweet({
   id,
   tweet,
   image,
-  user,
   createdAt,
+  user,
+  likes,
+  _count,
   userId,
 }: ITweet & { userId: number }) {
   const [isEdit, setIsEdit] = useState(false);
@@ -71,13 +71,12 @@ export default function Tweet({
       {isEdit ? (
         <TweetEditForm setIsEdit={setIsEdit} id={id} tweet={tweet} />
       ) : null}
-      <div className='flex justify-end items-center'>
-        <div className='flex items-center gap-3 px-1 text-slate-500'>
-          <IoMdHeartEmpty className='size-7' />
-          <TfiComment className='size-6' />
-          <IoShareSocialOutline className='size-6' />
-        </div>
-      </div>
+      <UserInteractions
+        count={_count}
+        likes={likes}
+        userId={userId}
+        tweetId={id}
+      />
     </li>
   );
 }

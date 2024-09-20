@@ -68,6 +68,15 @@ export async function GET(req: NextRequest) {
           id: true,
           username: true,
           profileImg: true,
+          likes: true,
+        },
+      },
+      comments: true,
+      likes: true,
+      _count: {
+        select: {
+          likes: true,
+          comments: true,
         },
       },
     },

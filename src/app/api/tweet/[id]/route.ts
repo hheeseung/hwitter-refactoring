@@ -16,11 +16,19 @@ export async function GET(
       tweet: true,
       image: true,
       createdAt: true,
+      comments: true,
+      likes: true,
       user: {
         select: {
           id: true,
           username: true,
           profileImg: true,
+        },
+      },
+      _count: {
+        select: {
+          likes: true,
+          comments: true,
         },
       },
     },

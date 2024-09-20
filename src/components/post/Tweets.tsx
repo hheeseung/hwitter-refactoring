@@ -17,6 +17,20 @@ export interface ITweet {
     id: number;
     username: string;
     profileImg: string | null;
+    likes: {
+      user: {
+        id: number;
+      };
+    };
+  };
+  comments: unknown[];
+  likes: {
+    userId: number;
+    tweetId: number;
+  }[];
+  _count: {
+    likes: number;
+    comments: number;
   };
 }
 
@@ -64,7 +78,7 @@ export default function Tweets({ userId }: { userId: number }) {
       .map((_, index) => <TweetsSkeleton key={index} />);
 
   return (
-    <ul>
+    <ul className='max-h-screen overflow-y-scroll'>
       {data?.pages.flatMap((page) =>
         page.tweets.map((tweet) => (
           <Tweet userId={userId} key={tweet.id} {...tweet} />
