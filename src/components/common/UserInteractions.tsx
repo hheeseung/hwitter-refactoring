@@ -45,7 +45,7 @@ export default function UserInteractions({
   });
 
   const onLikeClick = () => {
-    setIsLike(isLike);
+    setIsLike((prev) => !prev);
     mutation.mutate({ id: tweetId });
   };
 
