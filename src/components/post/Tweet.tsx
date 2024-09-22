@@ -3,6 +3,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
+import { IoMdHeart, IoMdHeartEmpty } from 'react-icons/io';
+import { TfiComment } from 'react-icons/tfi';
 import UserIcon from '../ui/UserIcon';
 import { ITweet } from './Tweets';
 import ActionButtons from '../common/ActionButtons';
@@ -19,7 +22,9 @@ export default function Tweet({
   _count,
   userId,
 }: ITweet & { userId: number }) {
+  const pathname = usePathname();
   const [isEdit, setIsEdit] = useState(false);
+  const isLiked = !!likes.find((like) => like.userId === userId);
 
   return (
     <li className='bg-white shadow-md p-5 rounded-xl mb-4 list-none'>
@@ -71,12 +76,28 @@ export default function Tweet({
       {isEdit ? (
         <TweetEditForm setIsEdit={setIsEdit} id={id} tweet={tweet} />
       ) : null}
-      <UserInteractions
-        count={_count}
-        likes={likes}
-        userId={userId}
-        tweetId={id}
-      />
+      {pathname === `/posts/${id}` ? (
+        <UserInteractions
+          isLiked={isLiked}
+          count={_count}
+          likes={likes}
+          tweetId={id}
+        />
+      ) : (
+        <div className='flex items-center justify-end gap-1 *:text-sm *:text-slate-500'>
+          <p className='flex items-center gap-1'>
+            <span>{_count.likes}</span>{' '}
+            {isLiked ? (
+              <IoMdHeart className='size-5 text-like' />
+            ) : (
+              <IoMdHeartEmpty className='size-5' />
+            )}
+          </p>
+          <p className='flex items-center gap-1'>
+            <span>{_count.comments}</span> <TfiComment className='size-4' />
+          </p>
+        </div>
+      )}
     </li>
   );
 }

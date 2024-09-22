@@ -7,6 +7,7 @@ import { IoMdHeartEmpty, IoMdHeart } from 'react-icons/io';
 import { TfiComment } from 'react-icons/tfi';
 
 interface Props {
+  isLiked: boolean;
   tweetId: number;
   count: {
     likes: number;
@@ -16,18 +17,11 @@ interface Props {
     userId: number;
     tweetId: number;
   }[];
-  userId: number;
 }
 
-export default function UserInteractions({
-  tweetId,
-  count,
-  likes,
-  userId,
-}: Props) {
+export default function UserInteractions({ isLiked, tweetId, count }: Props) {
   const queryClient = useQueryClient();
 
-  const isLiked = !!likes.find((like) => like.userId === userId);
   const [isLike, setIsLike] = useState(isLiked);
 
   const mutation = useMutation({
@@ -50,26 +44,24 @@ export default function UserInteractions({
   };
 
   return (
-    <div className='bottom-5 right-5 flex justify-end items-center'>
-      <div className='flex items-center gap-3 px-1 text-slate-500'>
-        <button
-          type='button'
-          className='flex items-center gap-1'
-          onClick={onLikeClick}
-        >
-          {isLike ? (
-            <IoMdHeart className='size-7 text-like' />
-          ) : (
-            <IoMdHeartEmpty className='size-7' />
-          )}
-          <span>{count.likes}</span>
-        </button>
-        <div className='flex items-center gap-1'>
-          <TfiComment className='size-6' />
-          <span>{count.comments}</span>
-        </div>
-        {/* <IoShareSocialOutline className='size-6' /> */}
+    <div className='flex justify-around items-center gap-3 px-1 text-slate-500'>
+      <button
+        type='button'
+        className='flex items-center gap-1'
+        onClick={onLikeClick}
+      >
+        {isLike ? (
+          <IoMdHeart className='size-7 text-like' />
+        ) : (
+          <IoMdHeartEmpty className='size-7' />
+        )}
+        <span>{count.likes}</span>
+      </button>
+      <div className='flex items-center gap-1'>
+        <TfiComment className='size-6' />
+        <span>{count.comments}</span>
       </div>
+      {/* <IoShareSocialOutline className='size-6' /> */}
     </div>
   );
 }

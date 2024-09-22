@@ -19,7 +19,7 @@ export default function TweetDetail({ userId }: { userId: number }) {
   if (isError) return <p className='text-center'>{error.message}</p>;
 
   return (
-    <section className='relative'>
+    <section>
       <Tweet userId={userId} {...data} />
     </section>
   );

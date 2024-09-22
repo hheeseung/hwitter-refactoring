@@ -6,7 +6,7 @@ export default async function Detail() {
   const userId = session.id!;
 
   return (
-    <section className='relative'>
+    <section>
       <TweetDetail userId={userId} />
     </section>
   );

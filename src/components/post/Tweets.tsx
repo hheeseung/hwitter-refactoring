@@ -2,9 +2,8 @@
 
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getAllTweet } from '@/services/tweet';
-import { useEffect } from 'react';
-import { useInView } from 'react-intersection-observer';
-import { FaSpinner } from 'react-icons/fa';
+import { useCallback } from 'react';
+import { Virtuoso } from 'react-virtuoso';
 import Tweet from './Tweet';
 import TweetsSkeleton from '../ui/TweetsSkeleton';
 
@@ -41,7 +40,7 @@ export interface PageData {
 
 export default function Tweets({ userId }: { userId: number }) {
   const {
-    data,
+    data: tweets,
     isError,
     error,
     isFetching,
@@ -60,15 +59,17 @@ export default function Tweets({ userId }: { userId: number }) {
       }
     },
   });
-  const { ref, inView } = useInView({
-    threshold: 1,
-  });
 
-  useEffect(() => {
-    if (inView && hasNextPage) {
+  const loadMore = useCallback(() => {
+    if (hasNextPage) {
       fetchNextPage();
     }
-  }, [fetchNextPage, hasNextPage, inView]);
+  }, [fetchNextPage, hasNextPage]);
+
+  const renderTweetItem = useCallback(
+    (_: number, tweet: ITweet) => <Tweet userId={userId} {...tweet} />,
+    [userId]
+  );
 
   if (isError) return <p className='text-center'>{error.message}</p>;
 
@@ -78,16 +79,11 @@ export default function Tweets({ userId }: { userId: number }) {
       .map((_, index) => <TweetsSkeleton key={index} />);
 
   return (
-    <ul className='max-h-screen overflow-y-scroll'>
-      {data?.pages.flatMap((page) =>
-        page.tweets.map((tweet) => (
-          <Tweet userId={userId} key={tweet.id} {...tweet} />
-        ))
-      )}
-      <div ref={ref} />
-      {isFetchingNextPage && (
-        <FaSpinner className='mx-auto text-blue-400 size-8 animate-spin' />
-      )}
-    </ul>
+    <Virtuoso
+      useWindowScroll
+      endReached={loadMore}
+      data={tweets?.pages.flatMap((page) => page.tweets) || []}
+      itemContent={renderTweetItem}
+    />
   );
 }
