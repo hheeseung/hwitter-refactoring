@@ -26,7 +26,7 @@ export async function createTweet({ tweet, image }: CreateProps) {
 }
 
 export async function getAllTweet({ page }: { page: unknown }) {
-  const res = await fetch(`api/tweet?page=${page}`, {
+  const res = await fetch(`/api/tweet?page=${page}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
